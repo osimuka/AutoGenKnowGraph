@@ -150,7 +150,7 @@ if __name__ == "__main__":
     # Initialize argument parser
     parser = argparse.ArgumentParser(description="Process a data file and column name.")
     parser.add_argument("filepath", help="Path to the data file")
-    parser.add_argument("--col", required=True, help="Name of the column to be processed")
+    parser.add_argument("--col", default=None, help="Name of the column to be processed")
     parser.add_argument("--show-df", action="store_true", help="Show the kg data frame and exit")
 
     # Parse command-line arguments
@@ -159,17 +159,16 @@ if __name__ == "__main__":
     # Read the data
     data = pd.read_csv(args.filepath)
 
-    # Check if the provided column name exists in the dataframe
-    if args.col not in data.columns:
-        raise ValueError(f"Column name '{args.col}' does not exist in the data file.")
+    # Use the first column if --col is not provided
+    col = args.col if args.col is not None else data.columns[0]
 
-    data_text = data[[args.col]].copy()  # create a copy to avoid warnings
+    data_text = data[[col]].copy()  # create a copy to avoid warnings
 
     # Ensure all text data are string type
-    data_text[args.col] = data_text[args.col].astype(str)
+    data_text[args.col] = data_text[col].astype(str)
 
     # Extract the predicates
-    kg_df = automate_predicates(data_text[args.col])
+    kg_df = automate_predicates(data_text[col])
 
     if args.show_df:
         # Print the knowledge graph dataframe

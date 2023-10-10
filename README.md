@@ -50,7 +50,7 @@ python -m spacy download en_core_web_sm
 
 Run example as a practice run
 
-A user will have to provide a column name `col` from the input file to be used to create the KG or else it will throw an error
+A user will have to provide a column name `col` from the input file to be used to create the KG if not provided it will use the first column which is useful if you have one column in your CSV file
 
 ```python
 python autogenknowgraph.py data/imdb_top_1000.csv --col Overview
