@@ -141,11 +141,17 @@ def show_kg(graph: pd.DataFrame) -> None:
     plt.show()
 
 
+def print_df(kg_df: pd.DataFrame) -> None:
+    """Print the dataframe"""
+    return pd.DataFrame({'Source': kg_df.source, 'edge': kg_df.edge, 'target': kg_df.target})
+
+
 if __name__ == "__main__":
     # Initialize argument parser
     parser = argparse.ArgumentParser(description="Process a data file and column name.")
     parser.add_argument("filepath", help="Path to the data file")
     parser.add_argument("--col", required=True, help="Name of the column to be processed")
+    parser.add_argument("--show-df", action="store_true", help="Show the kg data frame and exit")
 
     # Parse command-line arguments
     args = parser.parse_args()
@@ -164,6 +170,11 @@ if __name__ == "__main__":
 
     # Extract the predicates
     kg_df = automate_predicates(data_text[args.col])
+
+    if args.show_df:
+        # Print the knowledge graph dataframe
+        print(print_df(kg_df))
+        exit(0)
 
     # Show the knowledge graph
     show_kg(kg_df)

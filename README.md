@@ -55,3 +55,9 @@ A user will have to provide a column name `col` from the input file to be used t
 ```python
 python autogenknowgraph.py data/imdb_top_1000.csv --col Overview
 ```
+
+We can also print out the knowledge graph dataframe by adding the argument `--show-df`
+
+```python
+python autogenknowgraph.py data/imdb_top_1000.csv --col Overview --show-df
+```
